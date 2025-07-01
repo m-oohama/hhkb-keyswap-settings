@@ -1,25 +1,6 @@
 ﻿#Requires AutoHotkey v2
 ; キーリスト https://ahkscript.github.io/ja/docs/v2/KeyList.htm
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 関数
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; 長押しで話した時に別のキーに切り替える
-longPressThreshold := 300
-HandleLongPressKey(key, fKey) {
-    startTime := A_TickCount
-    KeyWait(key)  ; キーが離されるまで待つ
-    duration := A_TickCount - startTime
-
-    if (duration >= longPressThreshold) {
-        Send("{" . fKey . "}")
-    } else {
-        SendText(key)
-    }
-}
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 英吾配列に変更
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -45,19 +26,6 @@ HandleLongPressKey(key, fKey) {
 +vkBA::"
 ; #4
 ; キー変換なし
-
-$1:: HandleLongPressKey("1", "F1")
-$2:: HandleLongPressKey("2", "F2")
-$3:: HandleLongPressKey("3", "F3")
-$4:: HandleLongPressKey("4", "F4")
-$5:: HandleLongPressKey("5", "F5")
-$6:: HandleLongPressKey("6", "F6")
-$7:: HandleLongPressKey("7", "F7")
-$8:: HandleLongPressKey("8", "F8")
-$9:: HandleLongPressKey("9", "F9")
-$0:: HandleLongPressKey("0", "F10")
-$-:: HandleLongPressKey("-", "F11")
-$=:: HandleLongPressKey("=", "F12")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; その他のキー
