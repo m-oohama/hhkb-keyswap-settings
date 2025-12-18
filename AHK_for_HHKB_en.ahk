@@ -20,10 +20,10 @@
 @::[
 [::]
 ; #3
- vkBB::vkBB
-+vkBB::vkBA
- vkBA::'
-+vkBA::"
+ vkBB::vkBB ; ; を ;
++vkBB::vkBA ; + を :
+ vkBA::'    ; : を '
++vkBA::"    ; * を "
 ; #4
 ; キー変換なし
 
