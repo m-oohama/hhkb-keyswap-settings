@@ -32,6 +32,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 !4::Send "!{F4}"
 +Backspace::Send "{Delete}"
+F18::Run "C:\Program Files (x86)\PFU\Happy Hacking Keyboard Studio Keymap Tool\HHKBStudioKeymapTool.exe", "C:\Program Files (x86)\PFU\Happy Hacking Keyboard Studio Keymap Tool"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; マクロ
