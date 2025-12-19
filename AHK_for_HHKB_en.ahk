@@ -35,47 +35,68 @@
 F18::Run "C:\Program Files (x86)\PFU\Happy Hacking Keyboard Studio Keymap Tool\HHKBStudioKeymapTool.exe", "C:\Program Files (x86)\PFU\Happy Hacking Keyboard Studio Keymap Tool"
 +F7::F8
 +F10::F9
-F17::ShowHHKBBootCampStatus()
+F17::PushHHKBBootCampNotification()
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; マクロ
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-ShowHHKBBootCampStatus() {
-    static ini := "logs\hhkb_boot_camp.ini"
+/**
+ * HHKBブートキャンプの通知を表示し、統計を記録する
+ * 矢印キーなどの訓練中の操作発生時に呼び出す想定
+ */
+PushHHKBBootCampNotification() {
+    static logdir := A_ScriptDir "\logs"
+    static ini := logdir "\hhkb_boot_camp.ini"
     static ini_section := "cursor_key"
     static ini_total_key := "total_clicked"
-    today := FormatTime(, "yyyyMMdd")
-    yesterday := FormatTime(DateAdd(A_Now, -1, "Days"), "yyyyMMdd")
-    ini_today_key := today . "_clicked"
-    ini_yesterday_key := yesterday . "_clicked"
-    try {
-        totalClickedCount := Number(IniRead(ini, ini_section, ini_total_key, 0))
-        dailyClickedCount := Number(IniRead(ini, ini_section, ini_today_key, 0))
-        yesterdayClickedCount := Number(IniRead(ini, ini_section, ini_yesterday_key, 0))
-    } catch {
-        totalClickedCount := 0
-        dailyClickedCount := 0
-    }
-    
-    totalClickedCount += 1
-    dailyClickedCount += 1
-    IniWrite(totalClickedCount, ini, ini_section, ini_total_key)
-    IniWrite(dailyClickedCount, ini, ini_section, ini_today_key)
-    diff := dailyClickedCount - yesterdayClickedCount
 
-    msg := Format("total: {1} today: {2} ({3})",
+    if !DirExist(logdir) {
+        DirCreate logdir
+    }
+
+    now := A_Now
+    today := FormatTime(now, "yyyyMMdd")
+    yesterday := FormatTime(DateAdd(now, -1, "Days"), "yyyyMMdd")
+
+    ; 統計の読み込みと更新
+    try {
+        totalClickedCount := Number(IniRead(ini, ini_section, ini_total_key, 0)) + 1
+        dailyClickedCount := Number(IniRead(ini, ini_section, today "_clicked", 0)) + 1
+        yesterdayClickedCount := Number(IniRead(ini, ini_section, yesterday "_clicked", 0))
+    } catch {
+        totalClickedCount := 1
+        dailyClickedCount := 1
+        yesterdayClickedCount := 0
+    }
+    IniWrite(totalClickedCount, ini, ini_section, ini_total_key)
+    IniWrite(dailyClickedCount, ini, ini_section, today "_clicked")
+
+    ; 前日比の計算
+    diff := dailyClickedCount - yesterdayClickedCount
+    if (diff > 0) {
+        diffStatus := "+" diff
+    } else if (diff < 0) {
+        diffStatus := String(diff)
+    } else {
+        diffStatus := "±0"
+    }
+
+    ; 通知メッセージの作成
+    msg := Format("Total: {1} Today: {2} ({3})",
         totalClickedCount,
         dailyClickedCount,
-        ((diff > 0) ? "+" : "-") . ((diff = 0) ? "" : Abs(diff))
+        diffStatus
     )
+
+    ; 表示と連打防止の待機
     TrayTip msg, "Oops! clicked key won't work", 4
     Sleep 2500
-    TrayTip
+    TrayTip ; OSの設定を無視して通知バナーを強制的に閉じる
 }
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 初回起動処理
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 TrayTip "キースワップを適用しました。", "AHK_for_HHKB_en", 4
-Sleep 5000
-TrayTip()
+Sleep 2500
+TrayTip
