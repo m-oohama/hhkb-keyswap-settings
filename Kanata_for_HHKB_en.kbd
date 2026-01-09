@@ -42,7 +42,7 @@ https://github.com/jtroo/kanata/blob/main/docs/config.adoc
 )
 ;; US Shift Layer
 (deflayer US-Shift
-  lrld      _         @at       _         _         _         @ca       @am       @as      @lp        @rp       @ll       +         _         (unshift Delete)
+  _         _         @at       _         _         _         @ca       @am       @as      @lp        @rp       @ll       +         _         (unshift Delete)
   _         _         _         _         _         _         _         _         _         _         _         [         ]                   _
   _         _         _         _         _         _         _         _         _         _         @cl       @dq       @ti
   _         _         _         _         _         _         _         _         _         _         _         _         _                   _
