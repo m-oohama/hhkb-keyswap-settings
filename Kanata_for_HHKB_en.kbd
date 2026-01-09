@@ -1,0 +1,48 @@
+#|
+Kanata Keyboard Layout for Happy Hacking Keyboard (HHKB)
+Emulates US layout behavior on Windows with JIS layout settings
+|#
+
+(defcfg
+  process-unmapped-keys yes ;; Process keys that are not explicitly mapped
+)
+
+(defalias
+  eq (unicode "=")    ;; = EQUALS SIGN
+  ap (unicode "'")    ;; ' APOSTROPHE
+  ga (unicode "`")    ;; ` GRAVE ACCENT
+  at (unicode "@")    ;; @ COMMERCIAL AT
+  ca (unicode "^")    ;; ^ CARET
+  am (unicode "&")    ;; & AMPERSAND
+  as (unicode "*")    ;; * ASTERISK
+  lp (unicode "(")    ;; ( LEFT PARENTHESIS
+  rp (unicode ")")    ;; ) RIGHT PARENTHESIS
+  ll (unicode "_")    ;; _ LOW LINE
+  cl (unicode ":")    ;; : COLON
+  dq (unicode r#"""#) ;; " DOUBLE QUOTE
+  ti (unicode "~")    ;; ~ TILDE
+  ct (tap-hold 200 200 f16 lctl)              ;; Control when held, F16 when tapped
+  ls (multi lsft (layer-while-held US-Shift)) ;; Left Shift + US Shift Layer
+)
+
+;; Happy Hacking Keyboard JIS layout
+(defsrc
+  esc       1         2         3         4         5         6         7         8         9         0         Minus     Quote     \         Backspace
+  tab       q         w         e         r         t         y         u         i         o         p         grv       [                   Enter
+  lctl      a         s         d         f         g         h         j         k         l         Equal     scln      F19
+  lsft      z         x         c         v         b         n         m         ,         .         /         nubs      ]                   rsft
+)
+;; Base Layer
+(deflayer US-Base
+  _         _         _         _         _         _         _         _         _         _         _         _         @eq       _         _
+  _         _         _         _         _         _         _         _         _         _         _         [         ]                   _
+  _         _         _         _         _         _         _         _         _         _         _         @ap       @ga
+  @ls       _         _         _         _         _         _         _         _         _         _         _         _                   _
+)
+;; Shift Layer
+(deflayer US-Shift
+  _         _         @at       _         _         _         @ca       @am       @as      @lp        @rp       @ll       +         _         (unshift Delete)
+  _         _         _         _         _         _         _         _         _         _         _         [         ]                   _
+  _         _         _         _         _         _         _         _         _         _         @cl       @dq       @ti
+  _         _         _         _         _         _         _         _         _         _         _         _         _                   _
+)
