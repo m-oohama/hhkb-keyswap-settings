@@ -22,6 +22,7 @@
  +8::*
  +9::(
  +0::)
+ #+0::#+0 ; Shift + 0 に Hook されるため明示的に記述
  +-::_
   ^::=
  +^::+
@@ -47,9 +48,8 @@
 +F7::F8
 +F10::F9
 F17::PushHHKBBootCampNotification()
-TapHoldManager(100, 200, 3).Add("LAlt", TapDanceAlt)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; マクロ
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 /**
@@ -104,25 +104,6 @@ PushHHKBBootCampNotification() {
     TrayTip msg, "Oops! clicked key won't work", 4
     Sleep 2500
     TrayTip ; OSの設定を無視して通知バナーを強制的に閉じる
-}
-
-#Include Lib\TapHoldManager.ahk
-TapDanceAlt(isHold, taps, state) {
-    if (isHold) {
-        if (state) {
-            Send("{LAlt Down}")
-        } else {
-            Send("{LAlt Up}")
-        }
-    } else {
-        if (state) {
-            switch taps {
-                case 1: Send("#+0") ; Win + Shift + 0
-                case 2: Send("#^0") ; Win + Ctrl + 0
-                case 3: Send("#!0") ; Win + Alt + 0
-            }
-        }
-    }
 }
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
