@@ -1,10 +1,21 @@
 ﻿#Requires AutoHotkey v2
 ; キーリスト https://ahkscript.github.io/ja/docs/v2/KeyList.htm
+; ■ 修飾キー
+;  # Windows
+;  ^ Control
+;  ! Alt
+;  + Shift
+;  < 左側のキー限定
+;  > 右側のキー限定
+;  * ワイルドカード
+;  ~ 本来の機能を維持
+;  $ ループ防止
+;  & キー結合
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 英吾配列に変更
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; #1
+; Line #1
  +2::@
  +6::^
  +7::&
@@ -14,32 +25,34 @@
  +-::_
   ^::=
  +^::+
- F19::`
-+F19::~
-; #2
+ Backspace::`
++Backspace::~
+; Line #2
 @::[
 [::]
-; #3
- vkBB::vkBB ; ; を ;
+; Line #3
 +vkBB::vkBA ; + を :
  vkBA::'    ; : を '
 +vkBA::"    ; * を "
-; #4
+ ]::Backspace
++]::Delete
+; Line #4
+; キー変換なし
+; Line #5
 ; キー変換なし
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; その他のキー
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 !4::Send "!{F4}"
-+Backspace::Send "{Delete}"
-F18::Run "C:\Program Files (x86)\PFU\Happy Hacking Keyboard Studio Keymap Tool\HHKBStudioKeymapTool.exe", "C:\Program Files (x86)\PFU\Happy Hacking Keyboard Studio Keymap Tool"
 +F7::F8
 +F10::F9
-F17::ShowHHKBBootCampStatus()
+F17::ShowHHKBBootCampStatus()       
+TapHoldManager(100, 200, 3).Add("LAlt", TapDanceAlt)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; マクロ
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ShowHHKBBootCampStatus() {
     static ini := "logs\hhkb_boot_camp.ini"
     static ini_section := "cursor_key"
@@ -48,7 +61,7 @@ ShowHHKBBootCampStatus() {
     yesterday := FormatTime(DateAdd(A_Now, -1, "Days"), "yyyyMMdd")
     ini_today_key := today . "_clicked"
     ini_yesterday_key := yesterday . "_clicked"
-    try {
+    try {   
         totalClickedCount := Number(IniRead(ini, ini_section, ini_total_key, 0))
         dailyClickedCount := Number(IniRead(ini, ini_section, ini_today_key, 0))
         yesterdayClickedCount := Number(IniRead(ini, ini_section, ini_yesterday_key, 0))
@@ -56,7 +69,7 @@ ShowHHKBBootCampStatus() {
         totalClickedCount := 0
         dailyClickedCount := 0
     }
-    
+
     totalClickedCount += 1
     dailyClickedCount += 1
     IniWrite(totalClickedCount, ini, ini_section, ini_total_key)
@@ -71,6 +84,25 @@ ShowHHKBBootCampStatus() {
     TrayTip msg, "Oops! clicked key won't work", 4
     Sleep 2500
     TrayTip
+}
+
+#Include Lib\TapHoldManager.ahk
+TapDanceAlt(isHold, taps, state) {
+    if (isHold) {
+        if (state) {
+            Send("{LAlt Down}")
+        } else {
+            Send("{LAlt Up}")
+        }
+    } else {
+        if (state) {
+            switch taps {
+                case 1: Send("#+0") ; Win + Shift + 0
+                case 2: Send("#^0") ; Win + Ctrl + 0
+                case 3: Send("#!0") ; Win + Alt + 0
+            }
+        }
+    }
 }
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
