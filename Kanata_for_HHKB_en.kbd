@@ -7,19 +7,19 @@ https://github.com/jtroo/kanata/blob/main/docs/config.adoc
   process-unmapped-keys yes ;; Process keys that are not explicitly mapped
 )
 (defalias
-  eq (unicode "=")    ;; = EQUALS SIGN
-  ap (unicode "'")    ;; ' APOSTROPHE
-  ga (unicode "`")    ;; ` GRAVE ACCENT
-  at (unicode "@")    ;; @ COMMERCIAL AT
-  ca (unicode "^")    ;; ^ CARET
-  am (unicode "&")    ;; & AMPERSAND
-  as (unicode "*")    ;; * ASTERISK
-  lp (unicode "(")    ;; ( LEFT PARENTHESIS
-  rp (unicode ")")    ;; ) RIGHT PARENTHESIS
-  ll (unicode "_")    ;; _ LOW LINE
-  cl (unicode ":")    ;; : COLON
-  dq (unicode r#"""#) ;; " DOUBLE QUOTE
-  ti (unicode "~")    ;; ~ TILDE
+  eq S-Minus       ;; = EQUALS SIGN
+  ap S-7           ;; ' APOSTROPHE
+  ga S-grave       ;; ` GRAVE ACCENT
+  at (unmod grave) ;; @ COMMERCIAL AT
+  ca (unmod Quote) ;; ^ CARET
+  am 6             ;; & AMPERSAND
+  as S-scln        ;; * ASTERISK
+  lp 8             ;; ( LEFT PARENTHESIS
+  rp 9             ;; ) RIGHT PARENTHESIS
+  ll S-nubs        ;; _ LOW LINE
+  cl (unmod scln)  ;; : COLON
+  dq S-2           ;; " DOUBLE QUOTE
+  ti S-Quote       ;; ~ TILDE
   ct (tap-hold 200 200 f16 lctl)              ;; Control when held, F16 when tapped
   ls (multi lsft (layer-while-held US-Shift)) ;; Left Shift + US Shift Layer
   al (tap-hold 100 100 (tap-dance 200 (M-C-0 M-S-0 M-A-0)) alt) ;; Alt when held, Meta with Alt 0 when tapped
@@ -30,7 +30,7 @@ https://github.com/jtroo/kanata/blob/main/docs/config.adoc
   tab       q         w         e         r         t         y         u         i         o         p         grv       [                   Enter
   lctl      a         s         d         f         g         h         j         k         l         Equal     scln      F19
   lsft      z         x         c         v         b         n         m         ,         .         /         nubs      ]                   rsft
-  alt
+            lmet      lalt      
 )
 ;; US Layer
 (deflayer US
@@ -38,13 +38,13 @@ https://github.com/jtroo/kanata/blob/main/docs/config.adoc
   _         _         _         _         _         _         _         _         _         _         _         [         ]                   _
   _         _         _         _         _         _         _         _         _         _         _         @ap       @ga
   @ls       _         _         _         _         _         _         _         _         _         _         _         _                   _
-  @al
+            _         @al       
 )
 ;; US Shift Layer
 (deflayer US-Shift
-  _         _         @at       _         _         _         @ca       @am       @as      @lp        @rp       @ll       +         _         (unshift Delete)
+  lrld      _         @at       _         _         _         @ca       @am       @as      @lp        @rp       @ll       +         _         (unshift Delete)
   _         _         _         _         _         _         _         _         _         _         _         [         ]                   _
   _         _         _         _         _         _         _         _         _         _         @cl       @dq       @ti
   _         _         _         _         _         _         _         _         _         _         _         _         _                   _
-  _
+            _         _         
 )
