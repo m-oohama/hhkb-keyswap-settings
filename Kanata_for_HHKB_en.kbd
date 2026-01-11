@@ -5,6 +5,10 @@ https://github.com/jtroo/kanata/blob/main/docs/config.adoc
 |#
 (defcfg
   process-unmapped-keys yes ;; Process keys that are not explicitly mapped
+  concurrent-tap-hold yes   ;; Enforced for a more responsive tap-hold experience when activated by a chord.
+)
+(defchordsv2
+  (lmet lsft) (multi lmet lsft) 1000 first-release ()
 )
 (defalias
   eq S-Minus       ;; = EQUALS SIGN
@@ -22,29 +26,29 @@ https://github.com/jtroo/kanata/blob/main/docs/config.adoc
   ti S-Quote       ;; ~ TILDE
   ct (tap-hold 200 200 f16 lctl)              ;; Control when held, F16 when tapped
   ls (multi lsft (layer-while-held US-Shift)) ;; Left Shift + US Shift Layer
-  al (tap-hold 100 100 (tap-dance 200 (M-C-0 M-S-0 M-A-0)) alt) ;; Alt when held, Meta with Alt 0 when tapped
+  al (tap-hold 100 100 (tap-dance 200 (M-S-0 M-C-0 M-A-0)) alt) ;; Alt when held, Meta with Alt 0, Meta with Control 0, Meta with Shift 0 when tapped
 )
 ;; Happy Hacking Keyboard JIS layout
 (defsrc
   esc       1         2         3         4         5         6         7         8         9         0         Minus     Quote     \         Backspace
   tab       q         w         e         r         t         y         u         i         o         p         grv       [                   Enter
-  lctl      a         s         d         f         g         h         j         k         l         Equal     scln      F19
-  lsft      z         x         c         v         b         n         m         ,         .         /         nubs      ]                   rsft
+  lctl      a         s         d         f         g         h         j         k         l         Equal     scln      ]
+  lsft      z         x         c         v         b         n         m         ,         .         /         nubs                          rsft
             lmet      lalt      
 )
 ;; US Layer
 (deflayer US
-  _         _         _         _         _         _         _         _         _         _         _         _         @eq       _         _
+  _         _         _         _         _         _         _         _         _         _         _         _         @eq       _         @ga
   _         _         _         _         _         _         _         _         _         _         _         [         ]                   _
-  _         _         _         _         _         _         _         _         _         _         _         @ap       @ga
-  @ls       _         _         _         _         _         _         _         _         _         _         _         _                   _
+  _         _         _         _         _         _         _         _         _         _         _         @ap       Backspace
+  @ls       _         _         _         _         _         _         _         _         _         _         _                             _
             _         @al       
 )
 ;; US Shift Layer
 (deflayer US-Shift
-  lrld      _         @at       _         _         _         @ca       @am       @as      @lp        @rp       @ll       +         _         (unshift Delete)
+  lrld      _         @at       _         _         _         @ca       @am       @as      @lp        @rp       @ll       +         _         @ti
   _         _         _         _         _         _         _         _         _         _         _         [         ]                   _
-  _         _         _         _         _         _         _         _         _         _         @cl       @dq       @ti
-  _         _         _         _         _         _         _         _         _         _         _         _         _                   _
+  _         _         _         _         _         _         _         _         _         _         @cl       @dq       (unmod Delete)
+  _         _         _         _         _         _         _         _         _         _         _         _                             _
             _         _         
 )
