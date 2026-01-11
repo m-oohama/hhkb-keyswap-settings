@@ -11,44 +11,60 @@ https://github.com/jtroo/kanata/blob/main/docs/config.adoc
   (lmet lsft) (multi lmet lsft) 1000 first-release ()
 )
 (defalias
-  eq S-Minus       ;; = EQUALS SIGN
-  ap S-7           ;; ' APOSTROPHE
-  ga S-grave       ;; ` GRAVE ACCENT
-  at (unmod grave) ;; @ COMMERCIAL AT
-  ca (unmod Quote) ;; ^ CARET
-  am 6             ;; & AMPERSAND
-  as S-scln        ;; * ASTERISK
-  lp 8             ;; ( LEFT PARENTHESIS
-  rp 9             ;; ) RIGHT PARENTHESIS
-  ll S-nubs        ;; _ LOW LINE
-  cl (unmod scln)  ;; : COLON
-  dq S-2           ;; " DOUBLE QUOTE
-  ti S-Quote       ;; ~ TILDE
-  ct (tap-hold 200 200 f16 lctl)              ;; Control when held, F16 when tapped
+  eq S-Minus        ;; = EQUALS SIGN
+  ga S-[            ;; ` GRAVE ACCENT
+  ap S-7            ;; ' APOSTROPHE
+  at (unmod [)      ;; @ COMMERCIAL AT
+  ca (unmod Equal)  ;; ^ CARET
+  am 6              ;; & AMPERSAND
+  as S-Quote        ;; * ASTERISK
+  lp 8              ;; ( LEFT PARENTHESIS
+  rp 9              ;; ) RIGHT PARENTHESIS
+  ll  ro         ;; _ LOW LINE
+  pl scln           ;; + PLUS
+  ti S-Equal        ;; ~ TILDE
+  co (unmod Quote)  ;; : COLON
+  dq S-2            ;; " DOUBLE QUOTE
+  de (unmod Delete) ;; DELETE
   ls (multi lsft (layer-while-held US-Shift)) ;; Left Shift + US Shift Layer
   al (tap-hold 100 100 (tap-dance 200 (M-S-0 M-C-0 M-A-0)) alt) ;; Alt when held, Meta with Alt 0, Meta with Control 0, Meta with Shift 0 when tapped
 )
 ;; Happy Hacking Keyboard JIS layout
 (defsrc
-  esc       1         2         3         4         5         6         7         8         9         0         Minus     Quote     \         Backspace
-  tab       q         w         e         r         t         y         u         i         o         p         grv       [                   Enter
-  lctl      a         s         d         f         g         h         j         k         l         Equal     scln      ]
+  esc       1         2         3         4         5         6         7         8         9         0         -         =         ro        bspc
+  tab       q         w         e         r         t         y         u         i         o         p         [         ]                   ent
+  lctl      a         s         d         f         g         h         j         k         l         ;         apo       \
   lsft      z         x         c         v         b         n         m         ,         .         /         nubs                          rsft
-            lmet      lalt      
+            lmet      lalt
 )
 ;; US Layer
 (deflayer US
-  _         _         _         _         _         _         _         _         _         _         _         _         @eq       _         @ga
-  _         _         _         _         _         _         _         _         _         _         _         [         ]                   _
-  _         _         _         _         _         _         _         _         _         _         _         @ap       Backspace
+  lrld      _         _         _         _         _         _         _         _         _         _         _         @eq       _         @ga
+  _         _         _         _         _         _         _         _         _         _         _         ]         \                   _
+  _         _         _         _         _         _         _         _         _         _         _         @ap       bspc
   @ls       _         _         _         _         _         _         _         _         _         _         _                             _
-            _         @al       
+            _         @al
 )
 ;; US Shift Layer
 (deflayer US-Shift
-  lrld      _         @at       _         _         _         @ca       @am       @as      @lp        @rp       @ll       +         _         @ti
-  _         _         _         _         _         _         _         _         _         _         _         [         ]                   _
-  _         _         _         _         _         _         _         _         _         _         @cl       @dq       (unmod Delete)
+  lrld      _         @at       _         _         _         @ca       @am       @as      @lp        @rp       @ll       @pl       _         @ti
+  _         _         _         _         _         _         _         _         _         _         _         ]         \                   _
+  _         _         _         _         _         _         _         _         _         _         @co       @dq       @de
   _         _         _         _         _         _         _         _         _         _         _         _                             _
-            _         _         
+            _         _
 )
+
+
+#|
+1234567890-=\`
+!@#$%^&*() +|~
+
+１２３４５６７８９０－＝￥｀
+！＠＃＄％＾＆＊（）　＋｜～<
+
+!@#$%^&*()+|~
+!@3$%^6*()+|~
+
+ASDFGHJKL:"
+ASDFGHJKL:2
+|#
